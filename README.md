@@ -1,10 +1,15 @@
 # Ex-4 Rail-Fence-Program
 
+```
+Name     : Shivaram M.
+Reg. No. : 212223040195
+```
+
 # IMPLEMENTATION OF RAIL FENCE – ROW & COLUMN TRANSFORMATION TECHNIQUE
 
 # AIM:
 
-# To write a C program to implement the rail fence transposition technique.
+# To write a program to implement the rail fence transposition technique.
 
 # DESCRIPTION:
 
@@ -20,6 +25,64 @@ STEP-5: Read the characters row wise or column wise in the former order to get t
 
 # PROGRAM
 
+```
+def rail_fence_encrypt(text, rails):
+    fence = [[] for _ in range(rails)]
+    rail = 0
+    direction = 1
+    
+    for char in text:
+        fence[rail].append(char)
+        rail += direction
+        if rail == 0 or rail == rails - 1:
+            direction *= -1
+    
+    return "".join("".join(row) for row in fence)
+
+def rail_fence_decrypt(ciphertext, rails):
+    fence = [['' for _ in range(len(ciphertext))] for _ in range(rails)]
+    rail = 0
+    direction = 1
+    
+    for i in range(len(ciphertext)):
+        fence[rail][i] = '*'
+        rail += direction
+        if rail == 0 or rail == rails - 1:
+            direction *= -1
+    
+    index = 0
+    for row in range(rails):
+        for col in range(len(ciphertext)):
+            if fence[row][col] == '*' and index < len(ciphertext):
+                fence[row][col] = ciphertext[index]
+                index += 1
+    
+    result = []
+    rail = 0
+    direction = 1
+    for i in range(len(ciphertext)):
+        result.append(fence[rail][i])
+        rail += direction
+        if rail == 0 or rail == rails - 1:
+            direction *= -1
+    
+    return "".join(result)
+
+# Get user input
+message = input("Enter the message: ").replace(" ", "")
+rails = int(input("Enter the number of rails: "))
+
+encrypted_text = rail_fence_encrypt(message, rails)
+decrypted_text = rail_fence_decrypt(encrypted_text, rails)
+
+print("Encrypted:", encrypted_text)
+print("Decrypted:", decrypted_text)
+
+```
+
 # OUTPUT
 
+<img width="1680" alt="rail_fence" src="https://github.com/user-attachments/assets/2056eb5d-9e19-426f-b8ab-93731d415b52" />
+
 # RESULT
+The Program is implemented successfullly.
